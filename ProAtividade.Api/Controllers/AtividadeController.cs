@@ -1,4 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using ProAtividade.Api.Data.Dtos;
+using ProAtividade.Api.Services.Interfaces;
 
 namespace ProAtividade.Api.Controllers
 {
@@ -6,35 +8,46 @@ namespace ProAtividade.Api.Controllers
     [Route("api/[controller]")]
     public class AtividadeController : ControllerBase
     {
-        [HttpGet]
-        public string get()
+        private readonly IAtividadeService _atividadeService;
+        public AtividadeController(IAtividadeService atividadeService)
         {
-            return "texte";
+            _atividadeService = atividadeService;
+        }
+        [HttpGet]
+        public List<AtividadeDTO> GetAtividades()
+        {
+            return _atividadeService.GetAtividades();
+        }
+        [HttpPost]
+        public void CreateAtividade([FromBody]AtividadeDTO atividadeDTO)
+        {
+            _atividadeService.CreateAtividade(atividadeDTO);
+  
         }
         [HttpGet("{id}")]
-        public string get(int id)
+        public IActionResult GetAtividadePorID(int id)
         {
-            return $"texte {id}";
+            var atividade = _atividadeService.GetAtividadePorId(id);
+            if(atividade == null) return NotFound();
+            return Ok(atividade);
         }
 
-        [HttpPost]
-        public string Post()
-        {
-            return "texte post";
-        }
+        
 
         [HttpPut("{id}")]
-        public string Put(int id)
+        public IActionResult UpdateAtividade(int id, [FromBody] AtividadeDTO atividadeDTO)
         {
-            return "texte put";
+            atividadeDTO.Id = id;
+            _atividadeService.UpdateAtividade(atividadeDTO); 
+            return Ok();
         }
         [HttpDelete("{id}")]
-        public string Delete(int id)
+        public IActionResult Delete(int id)
         {
-            return "texte delete";
+            _atividadeService.DeleteAtividade(id);
+            return NoContent();
+
         }
-
-
 
     }
 }
