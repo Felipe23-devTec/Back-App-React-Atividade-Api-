@@ -2,11 +2,39 @@
 
 namespace ProAtividade.Api.Controllers
 {
-    public class AtividadeController : Controller
+    [ApiController]
+    [Route("api/[controller]")]
+    public class AtividadeController : ControllerBase
     {
-        public IActionResult Index()
+        [HttpGet]
+        public string get()
         {
-            return View();
+            return "texte";
         }
+        [HttpGet("{id}")]
+        public string get(int id)
+        {
+            return $"texte {id}";
+        }
+
+        [HttpPost]
+        public string Post()
+        {
+            return "texte post";
+        }
+
+        [HttpPut("{id}")]
+        public string Put(int id)
+        {
+            return "texte put";
+        }
+        [HttpDelete("{id}")]
+        public string Delete(int id)
+        {
+            return "texte delete";
+        }
+
+
+
     }
 }
