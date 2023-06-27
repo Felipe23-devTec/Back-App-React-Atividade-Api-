@@ -16,10 +16,12 @@ namespace ProAtividade.Api.Services.Implementacion
             _mapper = mapper;
         }
 
-        public void CreateAtividade(AtividadeDTO atividadeDTO)
+        public AtividadeDTO? CreateAtividade(AtividadeDTO atividadeDTO)
         {
             Atividade atividade = _mapper.Map<Atividade>(atividadeDTO);
             _atividadeRepository.CreateAtividade(atividade);
+            atividadeDTO.Id = atividade.Id;
+            return atividadeDTO;
         }
 
         public void DeleteAtividade(int id)
@@ -41,10 +43,11 @@ namespace ProAtividade.Api.Services.Implementacion
             return atividadeDTO;
         }
 
-        public void UpdateAtividade(AtividadeDTO atividadeDTO)
+        public AtividadeDTO UpdateAtividade(AtividadeDTO atividadeDTO)
         {
             Atividade atividade = _mapper.Map<Atividade>(atividadeDTO);
             _atividadeRepository.UpdateAtividade(atividade);
+            return atividadeDTO;
         }
 
     }

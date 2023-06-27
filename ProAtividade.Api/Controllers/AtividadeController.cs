@@ -19,10 +19,10 @@ namespace ProAtividade.Api.Controllers
             return _atividadeService.GetAtividades();
         }
         [HttpPost]
-        public void CreateAtividade([FromBody]AtividadeDTO atividadeDTO)
+        public AtividadeDTO? CreateAtividade([FromBody]AtividadeDTO atividadeDTO)
         {
-            _atividadeService.CreateAtividade(atividadeDTO);
-  
+            var at = _atividadeService.CreateAtividade(atividadeDTO);
+            return at;
         }
         [HttpGet("{id}")]
         public IActionResult GetAtividadePorID(int id)
@@ -35,11 +35,11 @@ namespace ProAtividade.Api.Controllers
         
 
         [HttpPut("{id}")]
-        public IActionResult UpdateAtividade(int id, [FromBody] AtividadeDTO atividadeDTO)
+        public AtividadeDTO? UpdateAtividade(int id, [FromBody] AtividadeDTO atividadeDTO)
         {
             atividadeDTO.Id = id;
-            _atividadeService.UpdateAtividade(atividadeDTO); 
-            return Ok();
+            var atividade =_atividadeService.UpdateAtividade(atividadeDTO); 
+            return atividade;
         }
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
