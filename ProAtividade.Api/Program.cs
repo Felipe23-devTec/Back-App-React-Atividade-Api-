@@ -9,7 +9,7 @@ using ProAtividade.Api.Services.Interfaces;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddEntityFrameworkSqlServer()
+builder.Services
                 .AddDbContext<AtividadeContext>(o => o.UseSqlServer(builder.Configuration.GetConnectionString("DataBase")));
 builder.Services.AddControllers();
 
